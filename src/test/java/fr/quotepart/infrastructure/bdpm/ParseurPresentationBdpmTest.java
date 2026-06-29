@@ -24,4 +24,16 @@ class ParseurPresentationBdpmTest {
         assertThat(presentation.tauxRemboursement()).isEqualTo(Taux.pourcent(65));
         assertThat(presentation.remboursable()).isTrue();
     }
+
+    @Test
+    void parse_une_ligne_non_remboursable_quand_le_taux_est_absent() {
+        String ligne = "61266250\t2009551\tplaquette PVC\tactive\tcommercialisée\t12/05/2010"
+                + "\t3400920095517\tnon\t\t8,50\t8,50\t0,00\tindications";
+
+        LignePresentationBdpm presentation = parseur.parse(ligne);
+
+        assertThat(presentation.remboursable()).isFalse();
+        assertThat(presentation.tauxRemboursement()).isNull();
+        assertThat(presentation.prix()).isEqualTo(Montant.euros("8.50"));
+    }
 }
