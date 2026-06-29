@@ -15,9 +15,14 @@ public class ParseurPresentationBdpm {
     private static final int COLONNE_CIP13 = 6;
     private static final int COLONNE_TAUX = 8;
     private static final int COLONNE_PRIX = 9;
+    private static final int NOMBRE_COLONNES_MINIMUM = COLONNE_PRIX + 1;
 
     public LignePresentationBdpm parse(String ligne) {
         String[] champs = ligne.split("\t", -1);
+
+        if (champs.length < NOMBRE_COLONNES_MINIMUM) {
+            throw new LigneBdpmInvalideException(ligne, champs.length);
+        }
 
         String codeCis = champs[COLONNE_CIS].trim();
         CodeCip13 codeCip13 = new CodeCip13(champs[COLONNE_CIP13].trim());

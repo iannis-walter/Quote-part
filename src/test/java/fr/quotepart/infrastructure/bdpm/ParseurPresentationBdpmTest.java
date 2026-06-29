@@ -1,6 +1,7 @@
 package fr.quotepart.infrastructure.bdpm;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import fr.quotepart.domaine.medicament.CodeCip13;
 import fr.quotepart.domaine.monnaie.Montant;
@@ -35,5 +36,13 @@ class ParseurPresentationBdpmTest {
         assertThat(presentation.remboursable()).isFalse();
         assertThat(presentation.tauxRemboursement()).isNull();
         assertThat(presentation.prix()).isEqualTo(Montant.euros("8.50"));
+    }
+
+    @Test
+    void rejette_une_ligne_incomplete_avec_une_erreur_explicite() {
+        String ligneTropCourte = "61266250\t2009551\tplaquette PVC";
+
+        assertThatThrownBy(() -> parseur.parse(ligneTropCourte))
+                .isInstanceOf(LigneBdpmInvalideException.class);
     }
 }
