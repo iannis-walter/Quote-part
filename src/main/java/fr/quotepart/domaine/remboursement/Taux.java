@@ -12,4 +12,8 @@ public record Taux(BigDecimal fraction) {
     public Montant appliquerA(Montant base) {
         return new Montant(base.valeur().multiply(fraction));
     }
+
+    public int pourcentage() {
+        return fraction.movePointRight(2).intValueExact();
+    }
 }

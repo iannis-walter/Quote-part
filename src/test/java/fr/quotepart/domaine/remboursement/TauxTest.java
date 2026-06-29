@@ -13,4 +13,9 @@ class TauxTest {
 
         assertThat(taux.appliquerA(Montant.euros("10.00"))).isEqualTo(Montant.euros("6.50"));
     }
+
+    @Test
+    void expose_son_pourcentage_entier() {
+        assertThat(Taux.pourcent(65).pourcentage()).isEqualTo(65);
+    }
 }
