@@ -14,19 +14,8 @@ public class CalculateurResteACharge {
             return Decompte.nonRemboursable(presentation.prix());
         }
 
-        Taux taux;
-        if (profil.ald()) {
-            taux = Taux.pourcent(100);
-        } else {
-            if (presentation.smr() == null) {
-                throw new DonneesMedicamentIncompletesException(presentation.code(), "SMR absent");
-            }
-            taux = bareme.tauxPour(presentation.smr());
-        }
-
-        Coefficient coefficient = profil.parcoursSoinsRespecte()
-                ? Coefficient.PLEIN
-                : bareme.coefficientHorsParcours();
+        Taux taux = tauxApplicable(presentation, profil, bareme);
+        Coefficient coefficient = coefficientApplicable(profil, bareme);
 
         Montant remboursementSecu = coefficient.appliquerA(taux.appliquerA(presentation.baseRemboursement()));
         Montant ticketModerateur = presentation.baseRemboursement().moins(remboursementSecu);
@@ -35,5 +24,21 @@ public class CalculateurResteACharge {
 
         return new Decompte(presentation.prix(), presentation.baseRemboursement(), taux,
                 remboursementSecu, ticketModerateur, franchise, resteACharge);
+    }
+
+    private Taux tauxApplicable(Presentation presentation, ProfilPatient profil, Bareme bareme) {
+        if (profil.ald()) {
+            return Taux.pourcent(100); // l'ALD prime sur le SMR
+        }
+        if (presentation.smr() == null) {
+            throw new DonneesMedicamentIncompletesException(presentation.code(), "SMR absent");
+        }
+        return bareme.tauxPour(presentation.smr());
+    }
+
+    private Coefficient coefficientApplicable(ProfilPatient profil, Bareme bareme) {
+        return profil.parcoursSoinsRespecte()
+                ? Coefficient.PLEIN
+                : bareme.coefficientHorsParcours();
     }
 }
