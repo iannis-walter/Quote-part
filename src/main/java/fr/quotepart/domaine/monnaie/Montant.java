@@ -18,4 +18,12 @@ public record Montant(BigDecimal valeur) {
     public static Montant euros(String valeur) {
         return new Montant(new BigDecimal(valeur));
     }
+
+    public Montant plus(Montant autre) {
+        return new Montant(valeur.add(autre.valeur));
+    }
+
+    public Montant moins(Montant autre) {
+        return new Montant(valeur.subtract(autre.valeur));
+    }
 }
