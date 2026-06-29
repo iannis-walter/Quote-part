@@ -1,6 +1,7 @@
 package fr.quotepart.domaine.remboursement;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import fr.quotepart.domaine.medicament.CodeCip13;
 import fr.quotepart.domaine.medicament.Presentation;
@@ -88,5 +89,18 @@ class CalculateurResteAChargeTest {
         // remboursement calculé sur la base : 10 × 65% = 6,50 ; reste = 15 − 6,50 + 1 = 9,50 (dont 5 € de dépassement)
         assertThat(decompte.remboursementSecu()).isEqualTo(Montant.euros("6.50"));
         assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("9.50"));
+    }
+
+    @Test
+    void smr_absent_leve_une_erreur_metier_explicite() {
+        Presentation presentation = new Presentation(
+                new CodeCip13("3400930000005"),
+                Montant.euros("10.00"),
+                Montant.euros("10.00"),
+                true,
+                null);                    // SMR manquant → impossible de déterminer le taux
+
+        assertThatThrownBy(() -> calcul.calculer(presentation, new ProfilPatient(true, false), bareme))
+                .isInstanceOf(DonneesMedicamentIncompletesException.class);
     }
 }

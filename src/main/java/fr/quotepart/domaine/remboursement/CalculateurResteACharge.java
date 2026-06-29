@@ -14,7 +14,16 @@ public class CalculateurResteACharge {
             return Decompte.nonRemboursable(presentation.prix());
         }
 
-        Taux taux = profil.ald() ? Taux.pourcent(100) : bareme.tauxPour(presentation.smr());
+        Taux taux;
+        if (profil.ald()) {
+            taux = Taux.pourcent(100);
+        } else {
+            if (presentation.smr() == null) {
+                throw new DonneesMedicamentIncompletesException(presentation.code(), "SMR absent");
+            }
+            taux = bareme.tauxPour(presentation.smr());
+        }
+
         Coefficient coefficient = profil.parcoursSoinsRespecte()
                 ? Coefficient.PLEIN
                 : bareme.coefficientHorsParcours();
