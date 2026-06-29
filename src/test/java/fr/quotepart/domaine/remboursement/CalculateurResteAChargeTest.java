@@ -57,4 +57,20 @@ class CalculateurResteAChargeTest {
 
         assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("8.00")); // prix entier, aucune franchise
     }
+
+    @Test
+    void hors_parcours_de_soins_le_remboursement_est_minore() {
+        Presentation presentation = new Presentation(
+                new CodeCip13("3400930000003"),
+                Montant.euros("10.00"),
+                Montant.euros("10.00"),
+                true,
+                Smr.IMPORTANT);
+
+        Decompte decompte = calcul.calculer(presentation, new ProfilPatient(false, false), bareme);
+
+        // coefficient hors parcours = 0,60 → remboursement 6,50 × 0,60 = 3,90 ; reste 10 − 3,90 + 1 = 7,10
+        assertThat(decompte.remboursementSecu()).isEqualTo(Montant.euros("3.90"));
+        assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("7.10"));
+    }
 }

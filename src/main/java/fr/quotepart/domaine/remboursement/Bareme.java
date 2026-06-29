@@ -11,5 +11,7 @@ public interface Bareme {
 
     Taux tauxPour(Smr smr);
 
+    Coefficient coefficientHorsParcours();
+
     Montant franchiseMedicaleParBoite();
 }

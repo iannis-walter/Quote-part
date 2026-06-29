@@ -15,7 +15,9 @@ public class CalculateurResteACharge {
         }
 
         Taux taux = profil.ald() ? Taux.pourcent(100) : bareme.tauxPour(presentation.smr());
-        Coefficient coefficient = Coefficient.PLEIN;
+        Coefficient coefficient = profil.parcoursSoinsRespecte()
+                ? Coefficient.PLEIN
+                : bareme.coefficientHorsParcours();
 
         Montant remboursementSecu = coefficient.appliquerA(taux.appliquerA(presentation.baseRemboursement()));
         Montant ticketModerateur = presentation.baseRemboursement().moins(remboursementSecu);
