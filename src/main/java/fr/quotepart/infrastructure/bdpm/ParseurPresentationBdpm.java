@@ -4,6 +4,8 @@ import fr.quotepart.domaine.medicament.CodeCip13;
 import fr.quotepart.domaine.monnaie.Montant;
 import fr.quotepart.domaine.remboursement.Taux;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Parse une ligne du fichier officiel CIS_CIP_bdpm.txt (tabulé, Windows-1252).
@@ -16,6 +18,12 @@ public class ParseurPresentationBdpm {
     private static final int COLONNE_TAUX = 8;
     private static final int COLONNE_PRIX = 9;
     private static final int NOMBRE_COLONNES_MINIMUM = COLONNE_PRIX + 1;
+
+    public List<LignePresentationBdpm> parseToutes(Stream<String> lignes) {
+        return lignes.filter(ligne -> !ligne.isBlank())
+                .map(this::parse)
+                .toList();
+    }
 
     public LignePresentationBdpm parse(String ligne) {
         String[] champs = ligne.split("\t", -1);

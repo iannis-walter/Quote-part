@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import fr.quotepart.domaine.medicament.CodeCip13;
 import fr.quotepart.domaine.monnaie.Montant;
 import fr.quotepart.domaine.remboursement.Taux;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 class ParseurPresentationBdpmTest {
@@ -44,5 +46,19 @@ class ParseurPresentationBdpmTest {
 
         assertThatThrownBy(() -> parseur.parse(ligneTropCourte))
                 .isInstanceOf(LigneBdpmInvalideException.class);
+    }
+
+    @Test
+    void parse_un_flux_de_lignes_en_ignorant_les_lignes_vides() {
+        String ligne1 = "61266250\t2009551\tplaquette PVC\tactive\tcommercialisée\t12/05/2010"
+                + "\t3400920095517\toui\t65 %\t2,11\t2,11\t0,00\tindications";
+        String ligne2 = "61266251\t2009552\tboîte 30\tactive\tcommercialisée\t12/05/2010"
+                + "\t3400920095524\toui\t30 %\t5,00\t5,00\t0,00\tindications";
+
+        List<LignePresentationBdpm> resultat =
+                parseur.parseToutes(Stream.of(ligne1, "", "   ", ligne2));
+
+        assertThat(resultat).extracting(ligne -> ligne.codeCip13().valeur())
+                .containsExactly("3400920095517", "3400920095524");
     }
 }
