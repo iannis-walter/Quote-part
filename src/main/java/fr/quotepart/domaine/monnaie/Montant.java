@@ -10,6 +10,9 @@ public record Montant(BigDecimal valeur) {
 
     public Montant {
         valeur = valeur.setScale(DECIMALES, ARRONDI);
+        if (valeur.signum() < 0) {
+            throw new MontantNegatifException(valeur);
+        }
     }
 
     public static Montant euros(String valeur) {
