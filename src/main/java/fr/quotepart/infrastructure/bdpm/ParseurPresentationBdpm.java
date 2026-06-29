@@ -6,11 +6,13 @@ import fr.quotepart.domaine.remboursement.Taux;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
+import org.springframework.stereotype.Component;
 
 /**
  * Parse une ligne du fichier officiel CIS_CIP_bdpm.txt (tabulé, Windows-1252).
  * Colonnes utilisées : 0=CIS, 6=CIP13, 8=taux de remboursement, 9=prix.
  */
+@Component
 public class ParseurPresentationBdpm {
 
     private static final int COLONNE_CIS = 0;
