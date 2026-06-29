@@ -1,0 +1,33 @@
+# === Fichiers de travail Claude / agent — JAMAIS commités ===
+.claude/
+CLAUDE.md
+.cursor/
+.aider*
+
+# === Docs de planning / artefacts de travail — hors git (repo = code pur) ===
+docs/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === IDE ===
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# === Java / build ===
+target/
+build/
+.gradle/
+out/
+bin/
+*.class
+*.log
+hs_err_pid*
+
+# === Env / secrets ===
+.env
+.env.*
+!.env.example
