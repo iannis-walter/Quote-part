@@ -28,4 +28,19 @@ class CalculateurResteAChargeTest {
         assertThat(decompte.remboursementSecu()).isEqualTo(Montant.euros("6.50"));
         assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("4.50")); // 3,50 TM + 1,00 franchise
     }
+
+    @Test
+    void patient_en_ald_pris_en_charge_a_100_pourcent() {
+        Presentation presentation = new Presentation(
+                new CodeCip13("3400930000001"),
+                Montant.euros("20.00"),
+                Montant.euros("20.00"),
+                true,
+                Smr.IMPORTANT);
+
+        Decompte decompte = calcul.calculer(presentation, new ProfilPatient(true, true), bareme);
+
+        assertThat(decompte.tauxApplique()).isEqualTo(Taux.pourcent(100));
+        assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("1.00")); // franchise seule
+    }
 }

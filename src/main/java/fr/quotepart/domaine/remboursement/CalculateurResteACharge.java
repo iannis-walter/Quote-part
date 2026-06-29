@@ -10,7 +10,7 @@ import fr.quotepart.domaine.monnaie.Montant;
 public class CalculateurResteACharge {
 
     public Decompte calculer(Presentation presentation, ProfilPatient profil, Bareme bareme) {
-        Taux taux = bareme.tauxPour(presentation.smr());
+        Taux taux = profil.ald() ? Taux.pourcent(100) : bareme.tauxPour(presentation.smr());
         Coefficient coefficient = Coefficient.PLEIN;
 
         Montant remboursementSecu = coefficient.appliquerA(taux.appliquerA(presentation.baseRemboursement()));
