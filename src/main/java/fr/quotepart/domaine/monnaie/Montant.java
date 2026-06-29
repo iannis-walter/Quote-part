@@ -15,6 +15,8 @@ public record Montant(BigDecimal valeur) {
         }
     }
 
+    public static final Montant ZERO = Montant.euros("0");
+
     public static Montant euros(String valeur) {
         return new Montant(new BigDecimal(valeur));
     }

@@ -43,4 +43,18 @@ class CalculateurResteAChargeTest {
         assertThat(decompte.tauxApplique()).isEqualTo(Taux.pourcent(100));
         assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("1.00")); // franchise seule
     }
+
+    @Test
+    void medicament_non_remboursable_reste_a_charge_egal_au_prix() {
+        Presentation presentation = new Presentation(
+                new CodeCip13("3400930000002"),
+                Montant.euros("8.00"),
+                Montant.euros("8.00"),
+                false,                    // non remboursable
+                Smr.IMPORTANT);
+
+        Decompte decompte = calcul.calculer(presentation, new ProfilPatient(true, false), bareme);
+
+        assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("8.00")); // prix entier, aucune franchise
+    }
 }

@@ -13,4 +13,9 @@ public record Decompte(
         Montant ticketModerateur,
         Montant franchiseMedicale,
         Montant resteACharge) {
+
+    /** Médicament non remboursable : tout le prix reste à charge, aucune franchise. */
+    static Decompte nonRemboursable(Montant prix) {
+        return new Decompte(prix, prix, Taux.pourcent(0), Montant.ZERO, prix, Montant.ZERO, prix);
+    }
 }
