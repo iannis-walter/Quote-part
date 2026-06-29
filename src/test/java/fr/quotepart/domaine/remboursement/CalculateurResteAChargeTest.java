@@ -73,4 +73,20 @@ class CalculateurResteAChargeTest {
         assertThat(decompte.remboursementSecu()).isEqualTo(Montant.euros("3.90"));
         assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("7.10"));
     }
+
+    @Test
+    void depassement_le_surcout_au_dela_de_la_base_reste_a_charge() {
+        Presentation presentation = new Presentation(
+                new CodeCip13("3400930000004"),
+                Montant.euros("15.00"),   // prix > base (ex. générique à tarif forfaitaire)
+                Montant.euros("10.00"),   // base de remboursement
+                true,
+                Smr.IMPORTANT);
+
+        Decompte decompte = calcul.calculer(presentation, new ProfilPatient(true, false), bareme);
+
+        // remboursement calculé sur la base : 10 × 65% = 6,50 ; reste = 15 − 6,50 + 1 = 9,50 (dont 5 € de dépassement)
+        assertThat(decompte.remboursementSecu()).isEqualTo(Montant.euros("6.50"));
+        assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("9.50"));
+    }
 }
