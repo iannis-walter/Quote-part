@@ -1,5 +1,6 @@
 package fr.quotepart;
 
+import fr.quotepart.domaine.remboursement.CalculateurResteACharge;
 import java.time.Clock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,5 +20,10 @@ public class QuotePartApplication {
     @Bean
     Clock horloge() {
         return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    CalculateurResteACharge calculateurResteACharge() {
+        return new CalculateurResteACharge();
     }
 }
