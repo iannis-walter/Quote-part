@@ -13,6 +13,9 @@ class BaremeDeTest implements Bareme {
     public Taux tauxPour(Smr smr) {
         return switch (smr) {
             case IMPORTANT -> Taux.pourcent(65);
+            case MODERE -> Taux.pourcent(30);
+            case FAIBLE -> Taux.pourcent(15);
+            case INSUFFISANT -> Taux.pourcent(0);
         };
     }
 
