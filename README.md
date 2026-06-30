@@ -83,6 +83,21 @@ idempotent par synchronisation planifiée) plutôt qu'appelées en runtime : le 
 autonome. La réutilisation est soumise à la mention de la source et de la date de mise à jour
 (exposées par `/source`), sans dénaturation des données.
 
+## Déploiement
+
+Une configuration de production durcie est fournie (`docker-compose.prod.yml` : volume
+persistant, redémarrage automatique, mot de passe injecté via `.env`, base non exposée).
+Sur un serveur disposant de Docker :
+
+```bash
+git clone https://github.com/iannis-walter/Quote-part.git && cd Quote-part
+echo "POSTGRES_PASSWORD=$(openssl rand -hex 16)" > .env
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Cible de référence : une instance **Oracle Cloud Always Free** (VM ARM Ampere A1), pour un
+hébergement gratuit et pérenne.
+
 ## Pratiques
 
 - **TDD discipliné** : cycles red → green → refactor lisibles dans l'historique git.
