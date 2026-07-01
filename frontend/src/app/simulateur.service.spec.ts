@@ -19,7 +19,7 @@ describe('SimulateurService', () => {
   afterEach(() => httpMock.verify());
 
   it('poste un calcul avec le code et le profil', () => {
-    const profil = { parcoursSoinsRespecte: true, ald: false };
+    const profil = { parcoursSoinsRespecte: true, ald: false, c2s: false, regimeLocal: false };
     let recu: Decompte | undefined;
 
     service.calculer('3400920095517', profil).subscribe((d) => (recu = d));

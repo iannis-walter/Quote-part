@@ -25,6 +25,11 @@ class BaremeDeTest implements Bareme {
     }
 
     @Override
+    public Taux tauxRegimeLocal() {
+        return Taux.pourcent(90);
+    }
+
+    @Override
     public Montant franchiseMedicaleParBoite() {
         return Montant.euros("1.00");
     }

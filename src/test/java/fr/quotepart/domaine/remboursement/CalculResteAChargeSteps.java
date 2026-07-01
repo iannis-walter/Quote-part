@@ -59,6 +59,16 @@ public class CalculResteAChargeSteps {
         profil = new ProfilPatient(true, true);
     }
 
+    @Et("un patient bénéficiaire de la C2S")
+    public void patientC2s() {
+        profil = new ProfilPatient(true, false, true, false);
+    }
+
+    @Et("un patient relevant du régime local d'Alsace-Moselle")
+    public void patientRegimeLocal() {
+        profil = new ProfilPatient(true, false, false, true);
+    }
+
     @Quand("je calcule le reste à charge")
     public void jeCalcule() {
         decompte = calcul.calculer(presentation, profil, bareme);

@@ -23,6 +23,9 @@ export class CascadeDecompte {
     if (this.estNonRemboursable()) {
       return 'Médicament non remboursable : le prix est intégralement à votre charge.';
     }
+    if (d.resteACharge === 0) {
+      return 'Aucun reste à charge : vous êtes intégralement couvert.';
+    }
     if (d.tauxPourcent === 100) {
       return 'Pris en charge à 100 % : il ne reste que la franchise.';
     }

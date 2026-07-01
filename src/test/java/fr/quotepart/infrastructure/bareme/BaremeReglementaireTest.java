@@ -18,6 +18,7 @@ class BaremeReglementaireTest {
             LocalDate.of(2024, 1, 1),
             Map.of(Smr.IMPORTANT, 65, Smr.MODERE, 30, Smr.FAIBLE, 15, Smr.INSUFFISANT, 0),
             new BigDecimal("0.60"),
+            90,
             new BigDecimal("1.00"));
 
     private final Bareme bareme = new BaremeReglementaire(properties);

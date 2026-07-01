@@ -15,5 +15,6 @@ public record BaremeProperties(
         LocalDate dateEffet,
         Map<Smr, Integer> tauxParSmr,
         BigDecimal coefficientHorsParcours,
+        Integer tauxRegimeLocal,
         BigDecimal franchiseMedicaleParBoite) {
 }

@@ -56,6 +56,19 @@ class CalculControllerIT {
     }
 
     @Test
+    void la_c2s_annule_le_reste_a_charge_via_l_api() throws Exception {
+        specialites.save(new SpecialiteEntity("61266250", Smr.IMPORTANT));
+        presentations.save(new PresentationEntity("3400920095517", "61266250", new BigDecimal("10.00"), 65, true));
+
+        mockMvc.perform(post("/calculs")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"cip13":"3400920095517","profil":{"parcoursSoinsRespecte":true,"ald":false,"c2s":true,"regimeLocal":false}}"""))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.resteACharge").value(closeTo(0.0, 0.001)));
+    }
+
+    @Test
     void retourne_404_si_medicament_introuvable() throws Exception {
         mockMvc.perform(post("/calculs")
                         .contentType(MediaType.APPLICATION_JSON)

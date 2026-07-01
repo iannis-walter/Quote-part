@@ -24,7 +24,9 @@ public class CalculController {
     public DecompteResponse calculer(@Valid @RequestBody CalculRequest request) {
         ProfilPatient profil = new ProfilPatient(
                 request.profil().parcoursSoinsRespecte(),
-                request.profil().ald());
+                request.profil().ald(),
+                request.profil().c2s(),
+                request.profil().regimeLocal());
         Decompte decompte = calculerResteACharge.executer(new CodeCip13(request.cip13()), profil);
         return DecompteResponse.depuis(decompte);
     }

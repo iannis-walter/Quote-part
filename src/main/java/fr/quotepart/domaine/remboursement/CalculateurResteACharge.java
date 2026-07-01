@@ -19,6 +19,13 @@ public class CalculateurResteACharge {
 
         Montant remboursementSecu = coefficient.appliquerA(taux.appliquerA(presentation.baseRemboursement()));
         Montant ticketModerateur = presentation.baseRemboursement().moins(remboursementSecu);
+
+        // C2S : le patient est exonéré de tout reste à charge, y compris la franchise.
+        if (profil.c2s()) {
+            return new Decompte(presentation.prix(), presentation.baseRemboursement(), taux,
+                    remboursementSecu, ticketModerateur, Montant.ZERO, Montant.ZERO);
+        }
+
         Montant franchise = bareme.franchiseMedicaleParBoite();
         Montant resteACharge = presentation.prix().moins(remboursementSecu).plus(franchise);
 
@@ -33,7 +40,13 @@ public class CalculateurResteACharge {
         if (presentation.smr() == null) {
             throw new DonneesMedicamentIncompletesException(presentation.code(), "SMR absent");
         }
-        return bareme.tauxPour(presentation.smr());
+        Taux tauxSmr = bareme.tauxPour(presentation.smr());
+        if (profil.regimeLocal()) {
+            // Le régime local complète le remboursement (sans jamais l'abaisser).
+            Taux local = bareme.tauxRegimeLocal();
+            return local.pourcentage() > tauxSmr.pourcentage() ? local : tauxSmr;
+        }
+        return tauxSmr;
     }
 
     private Coefficient coefficientApplicable(ProfilPatient profil, Bareme bareme) {

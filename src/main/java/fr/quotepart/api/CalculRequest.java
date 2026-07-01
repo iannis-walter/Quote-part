@@ -11,6 +11,10 @@ public record CalculRequest(
         @NotBlank String cip13,
         @NotNull @Valid ProfilRequest profil) {
 
-    public record ProfilRequest(boolean parcoursSoinsRespecte, boolean ald) {
+    public record ProfilRequest(
+            boolean parcoursSoinsRespecte,
+            boolean ald,
+            boolean c2s,
+            boolean regimeLocal) {
     }
 }

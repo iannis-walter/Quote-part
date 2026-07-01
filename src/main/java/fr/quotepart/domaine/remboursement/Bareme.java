@@ -13,5 +13,8 @@ public interface Bareme {
 
     Coefficient coefficientHorsParcours();
 
+    /** Taux porté par le complément du régime local d'Alsace-Moselle. */
+    Taux tauxRegimeLocal();
+
     Montant franchiseMedicaleParBoite();
 }

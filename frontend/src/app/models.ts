@@ -11,6 +11,8 @@ export interface Medicament {
 export interface Profil {
   parcoursSoinsRespecte: boolean;
   ald: boolean;
+  c2s: boolean;
+  regimeLocal: boolean;
 }
 
 export interface Decompte {

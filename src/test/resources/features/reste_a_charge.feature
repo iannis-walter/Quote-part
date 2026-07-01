@@ -37,3 +37,17 @@ Fonctionnalité: Calcul du reste à charge médicamenteux
     Quand je calcule le reste à charge
     Alors le remboursement de la Sécurité sociale est 1,95 €
     Et le reste à charge est 2,50 €
+
+  Scénario: Bénéficiaire de la Complémentaire santé solidaire
+    Étant donné une présentation remboursable à 10,00 € avec un SMR "important"
+    Et un patient bénéficiaire de la C2S
+    Quand je calcule le reste à charge
+    Alors le reste à charge est 0,00 €
+
+  Scénario: Régime local d'Alsace-Moselle
+    Étant donné une présentation remboursable à 10,00 € avec un SMR "important"
+    Et un patient relevant du régime local d'Alsace-Moselle
+    Quand je calcule le reste à charge
+    Alors le taux appliqué est 90 %
+    Et le remboursement de la Sécurité sociale est 9,00 €
+    Et le reste à charge est 2,00 €

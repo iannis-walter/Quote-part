@@ -23,6 +23,8 @@ export class App implements OnInit {
   protected readonly cip13 = signal<string>('');
   protected readonly parcours = signal(true);
   protected readonly ald = signal(false);
+  protected readonly c2s = signal(false);
+  protected readonly regimeLocal = signal(false);
   protected readonly decompte = signal<Decompte | null>(null);
   protected readonly chargement = signal(false);
   protected readonly erreur = signal<string | null>(null);
@@ -63,6 +65,16 @@ export class App implements OnInit {
     this.decompte.set(null);
   }
 
+  protected basculerC2s(valeur: boolean): void {
+    this.c2s.set(valeur);
+    this.decompte.set(null);
+  }
+
+  protected basculerRegimeLocal(valeur: boolean): void {
+    this.regimeLocal.set(valeur);
+    this.decompte.set(null);
+  }
+
   protected calculer(): void {
     if (!this.cip13()) {
       return;
@@ -70,7 +82,12 @@ export class App implements OnInit {
     this.chargement.set(true);
     this.erreur.set(null);
     this.service
-      .calculer(this.cip13(), { parcoursSoinsRespecte: this.parcours(), ald: this.ald() })
+      .calculer(this.cip13(), {
+        parcoursSoinsRespecte: this.parcours(),
+        ald: this.ald(),
+        c2s: this.c2s(),
+        regimeLocal: this.regimeLocal(),
+      })
       .subscribe({
         next: (decompte) => {
           this.decompte.set(decompte);

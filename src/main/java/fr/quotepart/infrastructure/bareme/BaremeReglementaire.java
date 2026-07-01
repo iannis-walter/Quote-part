@@ -36,6 +36,11 @@ public class BaremeReglementaire implements Bareme {
     }
 
     @Override
+    public Taux tauxRegimeLocal() {
+        return Taux.pourcent(properties.tauxRegimeLocal());
+    }
+
+    @Override
     public Montant franchiseMedicaleParBoite() {
         return new Montant(properties.franchiseMedicaleParBoite());
     }

@@ -34,6 +34,14 @@
           <input type="checkbox" [checked]="ald()" (change)="basculerAld($any($event.target).checked)" />
           <span>Affection longue durée (ALD)</span>
         </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="c2s()" (change)="basculerC2s($any($event.target).checked)" />
+          <span>Complémentaire santé solidaire (C2S)</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="regimeLocal()" (change)="basculerRegimeLocal($any($event.target).checked)" />
+          <span>Régime local Alsace-Moselle</span>
+        </label>
       </div>
 
       <button class="calculer" (click)="calculer()" [disabled]="chargement() || !cip13()">
