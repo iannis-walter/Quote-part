@@ -1,0 +1,30 @@
+:root {
+  --bg: oklch(0.975 0.006 85);
+  --surface: oklch(0.992 0.004 85);
+  --ink: oklch(0.28 0.05 320);
+  --ink-soft: oklch(0.46 0.038 320);
+  --ink-faint: oklch(0.62 0.03 320);
+  --line: oklch(0.9 0.012 320);
+
+  --accent: oklch(0.74 0.14 68);
+  --accent-bg: oklch(0.93 0.05 78);
+  --accent-ink: oklch(0.46 0.11 58);
+  --secu: oklch(0.64 0.045 255);
+
+  --display: 'Space Grotesk', system-ui, sans-serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}

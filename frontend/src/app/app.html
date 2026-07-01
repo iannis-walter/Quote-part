@@ -1,0 +1,60 @@
+<div class="page">
+  <header class="entete">
+    <div class="marque">
+      <span class="logo">Reliquat</span>
+      <span class="tagline">reste à charge médicamenteux</span>
+    </div>
+    <span class="source-tag">données BDPM</span>
+  </header>
+
+  <main class="scene">
+    <section class="controles">
+      <h1>Combien vais-je vraiment payer&nbsp;?</h1>
+      <p class="intro">Choisissez un médicament et votre situation. Le calcul s'appuie sur les données publiques BDPM.</p>
+
+      <label class="champ">
+        <span class="libelle">Médicament</span>
+        <select (change)="choisir($any($event.target).value)">
+          @for (m of medicaments(); track m.cip13) {
+            <option [value]="m.cip13">{{ m.denomination || m.cip13 }}</option>
+          }
+        </select>
+      </label>
+
+      <div class="options">
+        <label class="bascule">
+          <input type="checkbox" [checked]="parcours()" (change)="basculerParcours($any($event.target).checked)" />
+          <span>Parcours de soins respecté</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="ald()" (change)="basculerAld($any($event.target).checked)" />
+          <span>Affection longue durée (ALD)</span>
+        </label>
+      </div>
+
+      <button class="calculer" (click)="calculer()" [disabled]="chargement() || !cip13()">
+        {{ chargement() ? 'Calcul…' : 'Calculer le reste à charge' }}
+      </button>
+
+      @if (erreur()) {
+        <p class="erreur">{{ erreur() }}</p>
+      }
+    </section>
+
+    <section class="resultat">
+      @if (decompte(); as d) {
+        <app-cascade-decompte [decompte]="d" />
+      } @else {
+        <div class="vide">
+          <p class="vide-titre">Le décompte s'affichera ici</p>
+          <p class="vide-sous">Prix, part de la Sécurité sociale, ticket modérateur, franchise, reste à charge.</p>
+        </div>
+      }
+    </section>
+  </main>
+
+  <footer class="pied">
+    <span>Source : Base de Données Publique des Médicaments (ANSM / HAS / UNCAM).</span>
+    <span>Estimation avant complémentaire santé, sans valeur médicale ni officielle.</span>
+  </footer>
+</div>

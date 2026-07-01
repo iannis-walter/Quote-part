@@ -14,7 +14,7 @@ services:
       retries: 10
     restart: unless-stopped
 
-  app:
+  api:
     build: .
     depends_on:
       postgres:
@@ -24,8 +24,14 @@ services:
       SPRING_DATASOURCE_USERNAME: quotepart
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?Définir POSTGRES_PASSWORD dans .env}
       QUOTEPART_DEMO_AMORCER: "true"
+    restart: unless-stopped
+
+  web:
+    build: ./frontend
+    depends_on:
+      - api
     ports:
-      - "8080:8080"
+      - "80:80"
     restart: unless-stopped
 
 volumes:

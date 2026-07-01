@@ -1,0 +1,43 @@
+<div class="cascade">
+  <div class="etage">
+    <div class="etiquette">
+      <span>Prix en pharmacie</span>
+      <span class="montant">{{ euros(decompte().prix) }}</span>
+    </div>
+    <div class="piste">
+      <div class="barre prix" [class.revele]="revele()"></div>
+    </div>
+  </div>
+
+  <div class="etage">
+    <div class="etiquette">
+      <span>Pris en charge par la Sécurité sociale <em>· {{ decompte().tauxPourcent }} %</em></span>
+      <span class="montant secu">&minus;&nbsp;{{ euros(decompte().remboursementSecu) }}</span>
+    </div>
+    <div class="piste">
+      <div class="barre secu" [class.revele]="revele()" [style.width.%]="largeur(decompte().remboursementSecu)"></div>
+    </div>
+  </div>
+
+  <div class="etage">
+    <div class="etiquette">
+      <span class="fort">Reste à charge</span>
+      <span class="montant reste">{{ euros(resteAnime()) }}</span>
+    </div>
+    <div class="piste">
+      <div class="barre reste" [class.revele]="revele()" [style.width.%]="largeur(decompte().resteACharge)">
+        <span class="seg" [style.flexBasis.%]="partReste(decompte().ticketModerateur)"></span>
+        <span class="seg franchise" [style.flexBasis.%]="partReste(decompte().franchiseMedicale)"></span>
+      </div>
+    </div>
+    <div class="detail">
+      <span>ticket modérateur {{ euros(decompte().ticketModerateur) }}</span>
+      <span>franchise {{ euros(decompte().franchiseMedicale) }}</span>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <span>Vous paierez</span>
+    <strong>{{ euros(resteAnime()) }}</strong>
+  </div>
+</div>
