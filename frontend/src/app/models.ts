@@ -25,3 +25,15 @@ export interface Decompte {
   resteACharge: number;
   resteApresComplementaire: number | null;
 }
+
+export interface OrdonnanceResult {
+  lignes: Decompte[];
+  franchiseAppliquee: number;
+  totalResteACharge: number;
+}
+
+export interface Source {
+  source: string;
+  licence: string;
+  derniereSynchronisation: string | null;
+}

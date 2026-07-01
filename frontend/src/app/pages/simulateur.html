@@ -1,0 +1,88 @@
+<section class="sim">
+  <header class="sim-tete">
+    <p class="kicker">Simulateur</p>
+    <h1>Combien vais-je <em>vraiment</em> payer&nbsp;?</h1>
+    <p class="intro">Choisissez un médicament et votre situation. Le décompte se révèle en cascade, ligne par ligne.</p>
+  </header>
+
+  <div class="sim-scene">
+    <section class="controles">
+      <label class="champ">
+        <span class="libelle">Rechercher</span>
+        <div class="recherche">
+          <svg class="loupe" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="20" y1="20" x2="16.5" y2="16.5"></line>
+          </svg>
+          <input type="search" placeholder="Doliprane, amoxicilline…"
+                 (input)="chercher($any($event.target).value)" />
+        </div>
+      </label>
+
+      <label class="champ">
+        <span class="libelle">Médicament</span>
+        <select (change)="choisir($any($event.target).value)">
+          @for (m of medicaments(); track m.cip13) {
+            <option [value]="m.cip13">{{ m.denomination || m.cip13 }}</option>
+          }
+        </select>
+        @if (tagSmr(); as tag) {
+          <span class="tag-smr">{{ tag }}</span>
+        }
+      </label>
+
+      <div class="options">
+        <label class="bascule">
+          <input type="checkbox" [checked]="parcours()" (change)="basculerParcours($any($event.target).checked)" />
+          <span>Parcours de soins respecté</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="ald()" (change)="basculerAld($any($event.target).checked)" />
+          <span>Affection longue durée (ALD)</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="c2s()" (change)="basculerC2s($any($event.target).checked)" />
+          <span>Complémentaire santé solidaire (C2S)</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="regimeLocal()" (change)="basculerRegimeLocal($any($event.target).checked)" />
+          <span>Régime local Alsace-Moselle</span>
+        </label>
+      </div>
+
+      <label class="champ">
+        <span class="libelle">Complémentaire santé</span>
+        <select (change)="choisirMutuelle(+$any($event.target).value)">
+          <option value="0">Aucune</option>
+          <option value="50">Couvre 50 % du ticket modérateur</option>
+          <option value="100">Couvre 100 % du ticket modérateur</option>
+        </select>
+      </label>
+
+      <button class="cta" (click)="calculer()" [disabled]="chargement() || !cip13()">
+        {{ chargement() ? 'Calcul…' : 'Calculer le reste à charge' }}
+      </button>
+
+      @if (erreur()) {
+        <p class="erreur">{{ erreur() }}</p>
+      }
+    </section>
+
+    <section class="resultat">
+      @if (decompte(); as d) {
+        <app-cascade-decompte [decompte]="d" />
+      } @else {
+        <div class="vide">
+          <div class="apercu" aria-hidden="true">
+            <span class="barre-fantome" style="width: 100%"></span>
+            <span class="barre-fantome" style="width: 64%"></span>
+            <span class="barre-fantome" style="width: 42%"></span>
+          </div>
+          <p class="vide-titre">Le décompte s'affichera ici</p>
+          <p class="vide-sous">Prix, part de la Sécurité sociale, ticket modérateur, franchise, reste à charge.</p>
+        </div>
+      }
+    </section>
+  </div>
+</section>

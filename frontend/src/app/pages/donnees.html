@@ -1,0 +1,53 @@
+<section class="don">
+  <header class="don-tete">
+    <p class="kicker">Données &amp; méthode</p>
+    <h1>D'où viennent les chiffres.</h1>
+    <p class="intro">
+      Reliquat s'appuie sur des données publiques et sur un barème réglementaire explicite,
+      externalisé et daté. Rien n'est codé en dur, rien n'est inventé.
+    </p>
+  </header>
+
+  <div class="don-grille">
+    <article class="bloc source">
+      <h2>La source</h2>
+      @if (source(); as s) {
+        <p class="src-nom">{{ s.source }}</p>
+        <p class="src-licence">{{ s.licence }}</p>
+        <p class="src-date">
+          Dernière synchronisation :
+          <b>{{ s.derniereSynchronisation || 'non encore effectuée sur cette instance' }}</b>
+        </p>
+      } @else {
+        <p class="src-licence">Chargement…</p>
+      }
+    </article>
+
+    <article class="bloc bareme">
+      <h2>Taux selon le SMR</h2>
+      <table>
+        <tbody>
+          @for (b of bareme; track b.smr) {
+            <tr><td>{{ b.smr }}</td><td class="taux">{{ b.taux }}</td></tr>
+          }
+        </tbody>
+      </table>
+      <p class="note">Valeurs de référence, à confirmer sur ameli.fr / Légifrance. Franchise médicale 1 € / boîte, plafonnée à 50 € / an.</p>
+    </article>
+  </div>
+
+  <section class="methode">
+    <h2>Comment le reste à charge est calculé</h2>
+    <div class="formule">
+      <div class="etape"><span class="idx">1</span><p>La <b>base de remboursement</b> (le prix, sauf tarif forfaitaire des génériques) est le socle du calcul.</p></div>
+      <div class="etape"><span class="idx">2</span><p>La <b>Sécurité sociale</b> rembourse un pourcentage de cette base, selon le SMR — ou 100 % en ALD.</p></div>
+      <div class="etape"><span class="idx">3</span><p>Restent le <b>ticket modérateur</b>, la <b>franchise</b> (plafonnée), et l'éventuel <b>dépassement</b>.</p></div>
+      <div class="etape"><span class="idx">4</span><p>Votre <b>complémentaire</b> peut couvrir le ticket modérateur ; la C2S annule tout reste à charge.</p></div>
+    </div>
+  </section>
+
+  <p class="avertissement">
+    Projet de démonstration technique, sans valeur médicale ni officielle. Aucune donnée patient
+    n'est stockée : le profil est un simple paramètre de calcul.
+  </p>
+</section>

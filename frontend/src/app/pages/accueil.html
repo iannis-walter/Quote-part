@@ -1,0 +1,77 @@
+<section class="hero">
+  <div class="hero-texte">
+    <p class="kicker">Reste à charge médicamenteux</p>
+    <h1>Sachez ce qu'un médicament<br />vous coûte <em>vraiment</em>.</h1>
+    <p class="lede">
+      Reliquat calcule, sur les données publiques de la Base de Données Publique des Médicaments,
+      la part de la Sécurité sociale, le ticket modérateur, la franchise et le reste à charge réel,
+      selon votre situation.
+    </p>
+    <div class="hero-actions">
+      <a class="cta" routerLink="/simulateur">Ouvrir le simulateur</a>
+      <a class="lien-sec" routerLink="/donnees">Comment ça marche</a>
+    </div>
+  </div>
+
+  <div class="hero-art" aria-hidden="true">
+    <div class="halo"></div>
+    <div class="fiche">
+      <div class="fiche-tete">
+        <span>DOLIPRANE 1000 mg</span>
+        <span class="puce">SMR important</span>
+      </div>
+      <div class="etage">
+        <div class="ligne"><span>Prix en pharmacie</span><span class="num">10,00 €</span></div>
+        <div class="piste"><i style="width: 100%; background: var(--prix-bar)"></i></div>
+      </div>
+      <div class="etage">
+        <div class="ligne"><span>Sécurité sociale · 65 %</span><span class="num soft">− 6,50 €</span></div>
+        <div class="piste"><i style="width: 65%; background: var(--secu)"></i></div>
+      </div>
+      <div class="etage">
+        <div class="ligne"><span class="fort">Reste à charge</span><span class="num acc">4,50 €</span></div>
+        <div class="piste"><i style="width: 45%; background: var(--accent)"></i></div>
+      </div>
+      <div class="fiche-total">
+        <span>Vous paierez</span>
+        <strong>4,50 €</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="etapes">
+  <div class="etape">
+    <span class="idx">01</span>
+    <h3>Choisissez le médicament</h3>
+    <p>Recherche par nom sur les données réelles de la BDPM. Prix, taux et SMR sont déjà là.</p>
+  </div>
+  <div class="etape">
+    <span class="idx">02</span>
+    <h3>Décrivez votre situation</h3>
+    <p>Parcours de soins, ALD, C2S, régime local, complémentaire : le barème s'adapte.</p>
+  </div>
+  <div class="etape">
+    <span class="idx">03</span>
+    <h3>Lisez le décompte</h3>
+    <p>Chaque euro est justifié, du prix au reste à charge, en cascade et sans jargon.</p>
+  </div>
+</section>
+
+<section class="capacites">
+  <div class="cap-tete">
+    <p class="kicker">Le moteur</p>
+    <h2>Un calcul qui prend la réglementation au sérieux.</h2>
+    <p class="lede">Valeurs externalisées et datées, règles couvertes par des spécifications exécutables.</p>
+  </div>
+  <ul class="cap-liste">
+    @for (c of capacites; track c) {
+      <li>{{ c }}</li>
+    }
+  </ul>
+</section>
+
+<section class="bandeau">
+  <h2>Prêt à voir votre reste à charge&nbsp;?</h2>
+  <a class="cta" routerLink="/simulateur">Lancer une simulation</a>
+</section>

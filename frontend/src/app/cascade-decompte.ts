@@ -37,8 +37,12 @@ export class CascadeDecompte {
   constructor() {
     effect(() => {
       const d = this.decompte();
-      this.revele.set(false);
-      requestAnimationFrame(() => requestAnimationFrame(() => this.revele.set(true)));
+      if (typeof document !== 'undefined' && document.hidden) {
+        this.revele.set(true);
+      } else {
+        this.revele.set(false);
+        requestAnimationFrame(() => requestAnimationFrame(() => this.revele.set(true)));
+      }
       this.animerReste(d.resteACharge);
     });
   }
@@ -63,7 +67,7 @@ export class CascadeDecompte {
 
   private animerReste(cible: number): void {
     cancelAnimationFrame(this.image);
-    if (this.mouvementReduit()) {
+    if (this.mouvementReduit() || (typeof document !== 'undefined' && document.hidden)) {
       this.resteAnime.set(cible);
       return;
     }

@@ -1,0 +1,86 @@
+<section class="ord">
+  <header class="ord-tete">
+    <p class="kicker">Ordonnance</p>
+    <h1>Une ordonnance <em>entière</em>, franchise plafonnée.</h1>
+    <p class="intro">Ajoutez les médicaments d'une ordonnance : le reste à charge total tient compte du plafond annuel de franchise (50 €).</p>
+  </header>
+
+  <div class="ord-scene">
+    <section class="constructeur">
+      <div class="ajout">
+        <select (change)="aChoisir.set($any($event.target).value)">
+          @for (m of medicaments(); track m.cip13) {
+            <option [value]="m.cip13">{{ m.denomination || m.cip13 }}</option>
+          }
+        </select>
+        <button class="ajouter" (click)="ajouter()" [disabled]="!aChoisir()">Ajouter</button>
+      </div>
+
+      @if (panier().length) {
+        <ul class="panier">
+          @for (m of panier(); track $index) {
+            <li>
+              <span>{{ m.denomination || m.cip13 }}</span>
+              <button class="retirer" (click)="retirer($index)" aria-label="Retirer">&times;</button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="panier-vide">Aucun médicament ajouté pour l'instant.</p>
+      }
+
+      <div class="options">
+        <label class="bascule">
+          <input type="checkbox" [checked]="parcours()" (change)="bascule('parcours', $any($event.target).checked)" />
+          <span>Parcours de soins respecté</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="ald()" (change)="bascule('ald', $any($event.target).checked)" />
+          <span>Affection longue durée (ALD)</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="c2s()" (change)="bascule('c2s', $any($event.target).checked)" />
+          <span>Complémentaire santé solidaire (C2S)</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" [checked]="regimeLocal()" (change)="bascule('regimeLocal', $any($event.target).checked)" />
+          <span>Régime local Alsace-Moselle</span>
+        </label>
+      </div>
+
+      <label class="champ">
+        <span class="libelle">Franchise déjà consommée cette année (€)</span>
+        <input type="number" min="0" step="0.5" [value]="franchiseDeja()"
+               (input)="majFranchise($any($event.target).value)" />
+      </label>
+
+      <button class="cta" (click)="calculer()" [disabled]="chargement() || !panier().length">
+        {{ chargement() ? 'Calcul…' : 'Calculer l\'ordonnance' }}
+      </button>
+      @if (erreur()) { <p class="erreur">{{ erreur() }}</p> }
+    </section>
+
+    <section class="resultat">
+      @if (resultat(); as r) {
+        <div class="total">
+          <span>Reste à charge total</span>
+          <strong>{{ euros(r.totalResteACharge) }}</strong>
+        </div>
+        <p class="franchise-note">Franchise appliquée : <b>{{ euros(r.franchiseAppliquee) }}</b> (plafond annuel respecté).</p>
+        <ul class="lignes">
+          @for (l of r.lignes; track $index) {
+            <li>
+              <span class="l-nom">{{ panier()[$index]?.denomination || 'Médicament' }}</span>
+              <span class="l-montant">{{ euros(l.resteACharge) }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="vide">
+          <p class="vide-titre">Le total s'affichera ici</p>
+          <p class="vide-sous">Ajoutez des médicaments, décrivez la situation, puis calculez.</p>
+        </div>
+      }
+    </section>
+  </div>
+</section>
