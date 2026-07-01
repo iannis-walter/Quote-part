@@ -45,6 +45,11 @@ public class BaremeReglementaire implements Bareme {
         return new Montant(properties.franchiseMedicaleParBoite());
     }
 
+    @Override
+    public Montant plafondFranchiseAnnuel() {
+        return new Montant(properties.plafondFranchiseAnnuel());
+    }
+
     public LocalDate dateEffet() {
         return properties.dateEffet();
     }

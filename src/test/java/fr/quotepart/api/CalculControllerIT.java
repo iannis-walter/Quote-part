@@ -82,6 +82,21 @@ class CalculControllerIT {
     }
 
     @Test
+    void calcule_une_ordonnance_avec_plafonnement_de_franchise() throws Exception {
+        specialites.save(new SpecialiteEntity("61266250", Smr.IMPORTANT));
+        presentations.save(new PresentationEntity("3400920095517", "61266250", new BigDecimal("10.00"), 65, true));
+        presentations.save(new PresentationEntity("3400920095524", "61266250", new BigDecimal("10.00"), 65, true));
+
+        mockMvc.perform(post("/calculs/ordonnance")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"cip13s":["3400920095517","3400920095524"],"profil":{"parcoursSoinsRespecte":true,"ald":false,"c2s":false,"regimeLocal":false},"franchiseDejaConsommee":49.50}"""))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.franchiseAppliquee").value(closeTo(0.50, 0.001)))
+                .andExpect(jsonPath("$.totalResteACharge").value(closeTo(7.50, 0.001)));
+    }
+
+    @Test
     void retourne_404_si_medicament_introuvable() throws Exception {
         mockMvc.perform(post("/calculs")
                         .contentType(MediaType.APPLICATION_JSON)

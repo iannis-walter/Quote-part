@@ -16,5 +16,6 @@ public record BaremeProperties(
         Map<Smr, Integer> tauxParSmr,
         BigDecimal coefficientHorsParcours,
         Integer tauxRegimeLocal,
-        BigDecimal franchiseMedicaleParBoite) {
+        BigDecimal franchiseMedicaleParBoite,
+        BigDecimal plafondFranchiseAnnuel) {
 }

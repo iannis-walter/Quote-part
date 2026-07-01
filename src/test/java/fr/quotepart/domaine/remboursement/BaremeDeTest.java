@@ -33,4 +33,9 @@ class BaremeDeTest implements Bareme {
     public Montant franchiseMedicaleParBoite() {
         return Montant.euros("1.00");
     }
+
+    @Override
+    public Montant plafondFranchiseAnnuel() {
+        return Montant.euros("50.00");
+    }
 }

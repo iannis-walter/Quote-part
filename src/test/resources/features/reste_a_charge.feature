@@ -58,3 +58,11 @@ Fonctionnalité: Calcul du reste à charge médicamenteux
     Et une complémentaire qui couvre 100 % du ticket modérateur
     Quand je calcule le reste à charge
     Alors le reste à charge après complémentaire est 1,00 €
+
+  Scénario: Le plafond annuel limite la franchise d'une ordonnance
+    Étant donné une ordonnance de 2 médicaments remboursables à 10,00 € avec un SMR "important"
+    Et un patient dans le parcours de soins, sans ALD
+    Et une franchise déjà consommée de 49,50 € cette année
+    Quand je calcule le reste à charge de l'ordonnance
+    Alors la franchise appliquée est 0,50 €
+    Et le reste à charge de l'ordonnance est 7,50 €

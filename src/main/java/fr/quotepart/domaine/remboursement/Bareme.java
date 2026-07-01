@@ -17,4 +17,7 @@ public interface Bareme {
     Taux tauxRegimeLocal();
 
     Montant franchiseMedicaleParBoite();
+
+    /** Plafond annuel de la franchise médicale (toutes boîtes confondues). */
+    Montant plafondFranchiseAnnuel();
 }

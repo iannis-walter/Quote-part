@@ -7,6 +7,8 @@ import fr.quotepart.domaine.medicament.Presentation;
 import fr.quotepart.domaine.medicament.Smr;
 import fr.quotepart.domaine.monnaie.Montant;
 import io.cucumber.java.ParameterType;
+import java.util.ArrayList;
+import java.util.List;
 import io.cucumber.java.fr.Alors;
 import io.cucumber.java.fr.Et;
 import io.cucumber.java.fr.Etantdonné;
@@ -18,12 +20,16 @@ import io.cucumber.java.fr.Quand;
 public class CalculResteAChargeSteps {
 
     private final CalculateurResteACharge calcul = new CalculateurResteACharge();
+    private final CalculateurOrdonnance calculOrdonnance = new CalculateurOrdonnance(calcul);
     private final Bareme bareme = new BaremeDeTest();
 
     private Presentation presentation;
     private ProfilPatient profil = new ProfilPatient(true, false);
     private Complementaire complementaire;
     private Decompte decompte;
+    private List<Presentation> ordonnance = new ArrayList<>();
+    private Montant franchiseDejaConsommee = Montant.ZERO;
+    private DecompteOrdonnance decompteOrdonnance;
 
     @ParameterType("(\\d+,\\d{2}) €")
     public Montant montant(String valeur) {
@@ -83,6 +89,34 @@ public class CalculResteAChargeSteps {
     @Alors("le reste à charge après complémentaire est {montant}")
     public void leResteApresComplementaireEst(Montant attendu) {
         assertThat(complementaire.resteApres(decompte)).isEqualTo(attendu);
+    }
+
+    @Etantdonné("une ordonnance de {int} médicaments remboursables à {montant} avec un SMR {string}")
+    public void uneOrdonnance(int nombre, Montant prix, String smr) {
+        ordonnance = new ArrayList<>();
+        for (int i = 0; i < nombre; i++) {
+            ordonnance.add(new Presentation(new CodeCip13("3400000000000"), prix, prix, true, smrDepuis(smr)));
+        }
+    }
+
+    @Et("une franchise déjà consommée de {montant} cette année")
+    public void uneFranchiseDejaConsommee(Montant montant) {
+        franchiseDejaConsommee = montant;
+    }
+
+    @Quand("je calcule le reste à charge de l'ordonnance")
+    public void jeCalculeOrdonnance() {
+        decompteOrdonnance = calculOrdonnance.calculer(ordonnance, profil, bareme, franchiseDejaConsommee);
+    }
+
+    @Alors("la franchise appliquée est {montant}")
+    public void laFranchiseAppliqueeEst(Montant attendu) {
+        assertThat(decompteOrdonnance.franchiseAppliquee()).isEqualTo(attendu);
+    }
+
+    @Alors("le reste à charge de l'ordonnance est {montant}")
+    public void leResteOrdonnanceEst(Montant attendu) {
+        assertThat(decompteOrdonnance.totalResteACharge()).isEqualTo(attendu);
     }
 
     @Alors("le taux appliqué est {int} %")

@@ -1,5 +1,6 @@
 package fr.quotepart;
 
+import fr.quotepart.domaine.remboursement.CalculateurOrdonnance;
 import fr.quotepart.domaine.remboursement.CalculateurResteACharge;
 import java.time.Clock;
 import org.springframework.boot.SpringApplication;
@@ -25,5 +26,10 @@ public class QuotePartApplication {
     @Bean
     CalculateurResteACharge calculateurResteACharge() {
         return new CalculateurResteACharge();
+    }
+
+    @Bean
+    CalculateurOrdonnance calculateurOrdonnance(CalculateurResteACharge calculateurResteACharge) {
+        return new CalculateurOrdonnance(calculateurResteACharge);
     }
 }
