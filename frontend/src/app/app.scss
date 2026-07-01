@@ -64,7 +64,8 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-select {
+select,
+input[type="search"] {
   font: inherit;
   font-size: 0.95rem;
   color: var(--ink);
@@ -74,7 +75,8 @@ select {
   padding: 0.7rem 0.8rem;
   width: 100%;
 }
-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+select:focus,
+input[type="search"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
 
 .tag-smr {
   align-self: flex-start;

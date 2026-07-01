@@ -36,6 +36,17 @@ public class CatalogueJpa implements Catalogue {
     }
 
     @Override
+    public List<MedicamentResume> rechercher(String terme) {
+        List<String> cis = specialites.findByDenominationContainingIgnoreCase(terme).stream()
+                .map(SpecialiteEntity::getCis)
+                .toList();
+        if (cis.isEmpty()) {
+            return List.of();
+        }
+        return presentations.findByCisIn(cis).stream().map(this::versResume).toList();
+    }
+
+    @Override
     public Optional<MedicamentResume> resume(CodeCip13 code) {
         return presentations.findById(code.valeur()).map(this::versResume);
     }

@@ -14,6 +14,12 @@
       <p class="intro">Choisissez un médicament et votre situation. Le calcul s'appuie sur les données publiques BDPM.</p>
 
       <label class="champ">
+        <span class="libelle">Rechercher un médicament</span>
+        <input type="search" placeholder="Doliprane, amoxicilline…"
+               (input)="chercher($any($event.target).value)" />
+      </label>
+
+      <label class="champ">
         <span class="libelle">Médicament</span>
         <select (change)="choisir($any($event.target).value)">
           @for (m of medicaments(); track m.cip13) {

@@ -56,6 +56,18 @@ export class App implements OnInit {
     this.decompte.set(null);
   }
 
+  protected chercher(terme: string): void {
+    const source = terme.trim() ? this.service.rechercher(terme.trim()) : this.service.lister();
+    source.subscribe({
+      next: (medicaments) => {
+        this.medicaments.set(medicaments);
+        this.cip13.set(medicaments.length ? medicaments[0].cip13 : '');
+        this.decompte.set(null);
+      },
+      error: () => this.erreur.set('Recherche impossible.'),
+    });
+  }
+
   protected basculerParcours(valeur: boolean): void {
     this.parcours.set(valeur);
     this.decompte.set(null);

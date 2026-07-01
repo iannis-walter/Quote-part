@@ -15,5 +15,7 @@ public interface Catalogue {
 
     List<MedicamentResume> lister();
 
+    List<MedicamentResume> rechercher(String terme);
+
     Optional<MedicamentResume> resume(CodeCip13 code);
 }

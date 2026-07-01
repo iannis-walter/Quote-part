@@ -58,6 +58,24 @@ class MedicamentControllerIT {
     }
 
     @Test
+    void recherche_les_medicaments_par_nom() throws Exception {
+        SpecialiteEntity doliprane = new SpecialiteEntity("61266250", Smr.IMPORTANT);
+        doliprane.setDenomination("DOLIPRANE 1000 mg, comprimé");
+        specialites.save(doliprane);
+        presentations.save(new PresentationEntity("3400920095517", "61266250", new BigDecimal("10.00"), 65, true));
+
+        SpecialiteEntity amox = new SpecialiteEntity("62000000", Smr.IMPORTANT);
+        amox.setDenomination("AMOXICILLINE 500 mg, gélule");
+        specialites.save(amox);
+        presentations.save(new PresentationEntity("3400920099999", "62000000", new BigDecimal("3.00"), 65, true));
+
+        mockMvc.perform(get("/medicaments").param("q", "dolip"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].denomination").value("DOLIPRANE 1000 mg, comprimé"));
+    }
+
+    @Test
     void liste_les_medicaments_avec_leur_denomination() throws Exception {
         SpecialiteEntity specialite = new SpecialiteEntity("61266250", Smr.IMPORTANT);
         specialite.setDenomination("DOLIPRANE 1000 mg, comprimé");

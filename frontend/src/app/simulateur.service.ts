@@ -12,6 +12,10 @@ export class SimulateurService {
     return this.http.get<Medicament[]>(`${this.base}/medicaments`);
   }
 
+  rechercher(terme: string): Observable<Medicament[]> {
+    return this.http.get<Medicament[]>(`${this.base}/medicaments`, { params: { q: terme } });
+  }
+
   calculer(cip13: string, profil: Profil, complementaire: number | null = null): Observable<Decompte> {
     return this.http.post<Decompte>(`${this.base}/calculs`, { cip13, profil, complementaire });
   }
