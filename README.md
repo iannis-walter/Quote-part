@@ -10,10 +10,15 @@ la franchise et le **reste à charge** final avant complémentaire santé.
 > ⚠️ **Projet de démonstration technique.** Aucune valeur médicale ni officielle. Les valeurs
 > réglementaires sont paramétrées à titre indicatif et ne doivent fonder aucune décision de soin.
 
+Une **interface web** (Angular) accompagne le service : un simulateur où l'on choisit un
+médicament et un profil, et où le décompte se révèle en « cascade » (prix → part Sécurité
+sociale → reste à charge).
+
 ## Stack
 
-Java 21 · Spring Boot 3.4 · Hibernate/JPA · PostgreSQL · Flyway · springdoc OpenAPI ·
-JUnit 5 · AssertJ · Testcontainers · Docker.
+**Back** : Java 21 · Spring Boot 3.4 · Hibernate/JPA · PostgreSQL · Flyway · springdoc OpenAPI ·
+JUnit 5 · AssertJ · Testcontainers.
+**Front** : Angular · TypeScript · nginx (reverse-proxy même origine). Le tout conteneurisé.
 
 ## Architecture
 
@@ -37,27 +42,24 @@ La monnaie est toujours manipulée en `BigDecimal` (jamais `double`), avec arron
 docker compose up --build
 ```
 
-Démarre l'application et une base PostgreSQL. Une fois prêt :
+Démarre trois services : PostgreSQL, l'API et l'interface (nginx). Un échantillon de
+médicaments réels est amorcé au premier démarrage. Une fois prêt :
+
+- **Interface** : <http://localhost:8081>
+- **API** (Swagger) : <http://localhost:8080/swagger-ui.html>
 
 ```bash
-# État de santé
-curl http://localhost:8080/actuator/health
-
-# Provenance des données (conformité BDPM)
-curl http://localhost:8080/source
-
-# Calcul d'un reste à charge
+# Calcul d'un reste à charge (API directe)
 curl -X POST http://localhost:8080/calculs \
   -H 'Content-Type: application/json' \
-  -d '{"cip13":"3400920095517","profil":{"parcoursSoinsRespecte":true,"ald":false}}'
+  -d '{"cip13":"3400930000010","profil":{"parcoursSoinsRespecte":true,"ald":false}}'
 ```
-
-Documentation interactive de l'API : <http://localhost:8080/swagger-ui.html>.
 
 ### Tests
 
 ```bash
-./mvnw verify
+./mvnw verify          # back : unitaires + intégration (Testcontainers)
+cd frontend && npm ci && npm run build && npx ng test --watch=false   # front
 ```
 
 Exécute les tests unitaires (rapides, sans base) **et** les tests d'intégration
