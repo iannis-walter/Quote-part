@@ -1,16 +1,18 @@
 package fr.quotepart.infrastructure.persistance;
 
 import fr.quotepart.application.Catalogue;
+import fr.quotepart.application.MedicamentResume;
 import fr.quotepart.domaine.medicament.CodeCip13;
 import fr.quotepart.domaine.medicament.Presentation;
 import fr.quotepart.domaine.medicament.Smr;
 import fr.quotepart.domaine.monnaie.Montant;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 /**
- * Adaptateur du port {@link Catalogue} : assemble une présentation persistée et le SMR de sa
- * spécialité en un objet de domaine. En v1, la base de remboursement est assimilée au prix.
+ * Adaptateur du port {@link Catalogue} : assemble présentation persistée et spécialité (dénomination,
+ * SMR). Pour le calcul, la base de remboursement est assimilée au prix (simplification v1, cf. PRD §17).
  */
 @Component
 public class CatalogueJpa implements Catalogue {
@@ -28,16 +30,29 @@ public class CatalogueJpa implements Catalogue {
         return presentations.findById(code.valeur()).map(this::versDomaine);
     }
 
+    @Override
+    public List<MedicamentResume> lister() {
+        return presentations.findAll().stream().map(this::versResume).toList();
+    }
+
+    @Override
+    public Optional<MedicamentResume> resume(CodeCip13 code) {
+        return presentations.findById(code.valeur()).map(this::versResume);
+    }
+
     private Presentation versDomaine(PresentationEntity entite) {
-        Smr smr = specialites.findById(entite.getCis())
-                .map(SpecialiteEntity::getSmr)
-                .orElse(null);
+        Smr smr = specialites.findById(entite.getCis()).map(SpecialiteEntity::getSmr).orElse(null);
         Montant prix = new Montant(entite.getPrix());
-        return new Presentation(
-                new CodeCip13(entite.getCip13()),
-                prix,
-                prix, // base de remboursement = prix (simplification v1, cf. PRD §17)
+        return new Presentation(new CodeCip13(entite.getCip13()), prix, prix, entite.isRemboursable(), smr);
+    }
+
+    private MedicamentResume versResume(PresentationEntity entite) {
+        SpecialiteEntity specialite = specialites.findById(entite.getCis()).orElse(null);
+        return new MedicamentResume(
+                entite.getCip13(),
+                specialite != null ? specialite.getDenomination() : null,
+                entite.getPrix(),
                 entite.isRemboursable(),
-                smr);
+                specialite != null ? specialite.getSmr() : null);
     }
 }

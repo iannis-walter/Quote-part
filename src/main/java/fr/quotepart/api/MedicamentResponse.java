@@ -1,23 +1,25 @@
 package fr.quotepart.api;
 
-import fr.quotepart.domaine.medicament.Presentation;
+import fr.quotepart.application.MedicamentResume;
 import fr.quotepart.domaine.medicament.Smr;
 import java.math.BigDecimal;
 
 /**
- * Détail d'une présentation exposé par l'API.
+ * Détail d'un médicament exposé par l'API.
  */
 public record MedicamentResponse(
         String cip13,
+        String denomination,
         BigDecimal prix,
         boolean remboursable,
         Smr smr) {
 
-    public static MedicamentResponse depuis(Presentation presentation) {
+    public static MedicamentResponse depuis(MedicamentResume resume) {
         return new MedicamentResponse(
-                presentation.code().valeur(),
-                presentation.prix().valeur(),
-                presentation.remboursable(),
-                presentation.smr());
+                resume.cip13(),
+                resume.denomination(),
+                resume.prix(),
+                resume.remboursable(),
+                resume.smr());
     }
 }

@@ -1,5 +1,6 @@
 package fr.quotepart.api;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,5 +55,19 @@ class MedicamentControllerIT {
     void retourne_404_si_le_medicament_est_inconnu() throws Exception {
         mockMvc.perform(get("/medicaments/0000000000000"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void liste_les_medicaments_avec_leur_denomination() throws Exception {
+        SpecialiteEntity specialite = new SpecialiteEntity("61266250", Smr.IMPORTANT);
+        specialite.setDenomination("DOLIPRANE 1000 mg, comprimé");
+        specialites.save(specialite);
+        presentations.save(new PresentationEntity("3400920095517", "61266250", new BigDecimal("10.00"), 65, true));
+
+        mockMvc.perform(get("/medicaments"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].cip13").value("3400920095517"))
+                .andExpect(jsonPath("$[0].denomination").value("DOLIPRANE 1000 mg, comprimé"));
     }
 }
