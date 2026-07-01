@@ -1,4 +1,4 @@
-import { Component, effect, input, signal } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { Decompte } from './models';
 
 @Component({
@@ -12,6 +12,18 @@ export class CascadeDecompte {
   protected readonly revele = signal(false);
   protected readonly resteAnime = signal(0);
 
+  /** Note contextuelle selon le cas de prise en charge. */
+  protected readonly note = computed(() => {
+    const d = this.decompte();
+    if (d.tauxPourcent === 0 && d.remboursementSecu === 0) {
+      return 'Médicament non remboursable : le prix est intégralement à votre charge.';
+    }
+    if (d.tauxPourcent === 100) {
+      return 'Pris en charge à 100 % : il ne reste que la franchise.';
+    }
+    return null;
+  });
+
   private image = 0;
 
   constructor() {
@@ -21,6 +33,10 @@ export class CascadeDecompte {
       requestAnimationFrame(() => requestAnimationFrame(() => this.revele.set(true)));
       this.animerReste(d.resteACharge);
     });
+  }
+
+  private mouvementReduit(): boolean {
+    return globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   }
 
   protected largeur(part: number): number {
@@ -39,6 +55,10 @@ export class CascadeDecompte {
 
   private animerReste(cible: number): void {
     cancelAnimationFrame(this.image);
+    if (this.mouvementReduit()) {
+      this.resteAnime.set(cible);
+      return;
+    }
     const debut = performance.now();
     const duree = 650;
     const pas = (t: number) => {

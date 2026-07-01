@@ -85,11 +85,14 @@ select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px
   border-radius: 10px;
   padding: 0.85rem 1.3rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.2s ease, transform 0.16s var(--ease-out);
 }
-.calculer:hover:not(:disabled) { background: var(--accent-ink); }
-.calculer:active:not(:disabled) { transform: scale(0.98); }
+.calculer:active:not(:disabled) { transform: scale(0.97); }
+.calculer:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-bg); }
 .calculer:disabled { opacity: 0.5; cursor: default; }
+@media (hover: hover) and (pointer: fine) {
+  .calculer:hover:not(:disabled) { background: var(--accent-ink); }
+}
 
 .erreur { margin-top: 1rem; color: oklch(0.5 0.15 25); font-size: 0.88rem; }
 

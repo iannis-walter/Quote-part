@@ -29,13 +29,17 @@
   border-radius: 10px;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.52s var(--ease-out);
   display: flex;
 }
 .barre.revele { transform: scaleX(1); }
 .barre.prix { width: 100%; background: oklch(0.9 0.012 320); }
 .barre.secu { background: var(--secu); }
 .barre.reste { background: var(--accent); }
+
+// Stagger : le décompte « tombe » de haut en bas.
+.etage:nth-child(2) .barre { transition-delay: 0.07s; }
+.etage:nth-child(3) .barre { transition-delay: 0.14s; }
 
 .seg { display: block; height: 100%; }
 .seg.franchise { background: oklch(0.66 0.15 55); }
@@ -67,6 +71,18 @@
   letter-spacing: -0.02em;
 }
 
+.note {
+  margin: 0.9rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--accent-ink);
+  transition: opacity 0.3s var(--ease-out);
+}
+@starting-style {
+  .note { opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .barre { transition: none; }
+  .barre { transition: none; transition-delay: 0s; }
+  .note { transition: none; }
 }

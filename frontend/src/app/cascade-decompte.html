@@ -40,4 +40,8 @@
     <span>Vous paierez</span>
     <strong>{{ euros(resteAnime()) }}</strong>
   </div>
+
+  @if (note(); as texte) {
+    <p class="note">{{ texte }}</p>
+  }
 </div>
