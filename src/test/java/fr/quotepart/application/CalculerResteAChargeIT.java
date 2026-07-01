@@ -52,6 +52,21 @@ class CalculerResteAChargeIT {
     }
 
     @Test
+    void applique_la_base_de_remboursement_stockee_pour_le_depassement() {
+        specialites.save(new SpecialiteEntity("61266250", Smr.IMPORTANT));
+        PresentationEntity generique =
+                new PresentationEntity("3400920095599", "61266250", new BigDecimal("3.45"), 65, true);
+        generique.setBaseRemboursement(new BigDecimal("3.00")); // tarif forfaitaire < prix
+        presentations.save(generique);
+
+        Decompte decompte = calculerResteACharge.executer(
+                new CodeCip13("3400920095599"), new ProfilPatient(true, false));
+
+        assertThat(decompte.remboursementSecu()).isEqualTo(Montant.euros("1.95")); // 3,00 × 65%
+        assertThat(decompte.resteACharge()).isEqualTo(Montant.euros("2.50")); // 3,45 − 1,95 + 1,00
+    }
+
+    @Test
     void echoue_si_le_medicament_est_introuvable() {
         assertThatThrownBy(() -> calculerResteACharge.executer(
                 new CodeCip13("0000000000000"), new ProfilPatient(true, false)))

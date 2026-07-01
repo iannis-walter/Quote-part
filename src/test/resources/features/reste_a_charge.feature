@@ -30,3 +30,10 @@ Fonctionnalité: Calcul du reste à charge médicamenteux
     Quand je calcule le reste à charge
     Alors le remboursement de la Sécurité sociale est 3,90 €
     Et le reste à charge est 7,10 €
+
+  Scénario: Générique sous tarif forfaitaire de responsabilité
+    Étant donné une présentation remboursable à 3,45 € avec une base de remboursement de 3,00 € et un SMR "important"
+    Et un patient dans le parcours de soins, sans ALD
+    Quand je calcule le reste à charge
+    Alors le remboursement de la Sécurité sociale est 1,95 €
+    Et le reste à charge est 2,50 €

@@ -30,6 +30,9 @@ public class PresentationEntity {
     @Column(name = "remboursable", nullable = false)
     private boolean remboursable;
 
+    @Column(name = "base_remboursement")
+    private BigDecimal baseRemboursement;
+
     protected PresentationEntity() {
         // requis par JPA
     }
@@ -60,5 +63,14 @@ public class PresentationEntity {
 
     public boolean isRemboursable() {
         return remboursable;
+    }
+
+    /** Base de remboursement si distincte du prix (TFR), sinon {@code null}. */
+    public BigDecimal getBaseRemboursement() {
+        return baseRemboursement;
+    }
+
+    public void setBaseRemboursement(BigDecimal baseRemboursement) {
+        this.baseRemboursement = baseRemboursement;
     }
 }

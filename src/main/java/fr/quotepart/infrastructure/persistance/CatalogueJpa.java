@@ -43,7 +43,9 @@ public class CatalogueJpa implements Catalogue {
     private Presentation versDomaine(PresentationEntity entite) {
         Smr smr = specialites.findById(entite.getCis()).map(SpecialiteEntity::getSmr).orElse(null);
         Montant prix = new Montant(entite.getPrix());
-        return new Presentation(new CodeCip13(entite.getCip13()), prix, prix, entite.isRemboursable(), smr);
+        // Base de remboursement stockée (TFR) si présente, sinon assimilée au prix (défaut v1).
+        Montant base = entite.getBaseRemboursement() != null ? new Montant(entite.getBaseRemboursement()) : prix;
+        return new Presentation(new CodeCip13(entite.getCip13()), prix, base, entite.isRemboursable(), smr);
     }
 
     private MedicamentResume versResume(PresentationEntity entite) {

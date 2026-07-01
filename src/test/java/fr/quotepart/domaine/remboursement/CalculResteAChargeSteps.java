@@ -34,6 +34,11 @@ public class CalculResteAChargeSteps {
         presentation = new Presentation(new CodeCip13("3400000000000"), prix, prix, true, smrDepuis(smr));
     }
 
+    @Etantdonné("une présentation remboursable à {montant} avec une base de remboursement de {montant} et un SMR {string}")
+    public void presentationAvecBaseDistincte(Montant prix, Montant base, String smr) {
+        presentation = new Presentation(new CodeCip13("3400000000000"), prix, base, true, smrDepuis(smr));
+    }
+
     @Etantdonné("une présentation non remboursable à {montant}")
     public void presentationNonRemboursable(Montant prix) {
         presentation = new Presentation(new CodeCip13("3400000000000"), prix, prix, false, Smr.INSUFFISANT);
