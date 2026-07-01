@@ -16,9 +16,13 @@
   --fill: #e9e9ee;
   --piste: #ececf0;
 
-  --radius-card: 18px;
+  --radius-card: 22px;
   --radius-ctrl: 12px;
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 10px 34px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 14px 44px rgba(0, 0, 0, 0.06);
+
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-rim: rgba(255, 255, 255, 0.65);
+  --glass-blur: saturate(180%) blur(30px);
 
   --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui,
     'Helvetica Neue', Arial, sans-serif;
@@ -31,7 +35,12 @@
 html, body { margin: 0; }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(55% 45% at 12% -5%, rgba(0, 113, 227, 0.07), transparent 70%),
+    radial-gradient(45% 45% at 105% 105%, rgba(255, 149, 0, 0.06), transparent 70%),
+    linear-gradient(180deg, #fbfbfd, #f1f1f4);
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;

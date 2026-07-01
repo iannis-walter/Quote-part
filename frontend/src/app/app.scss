@@ -29,7 +29,7 @@
 .scene {
   display: grid;
   grid-template-columns: 5fr 6fr;
-  gap: 1.75rem;
+  gap: 2rem;
   align-items: start;
 }
 @media (max-width: 760px) {
@@ -38,25 +38,29 @@
 
 .controles,
 .resultat {
-  background: var(--surface);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-rim);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  padding: 2rem 1.85rem;
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 2.35rem 2.1rem;
 }
 
 .controles h1 {
   font-weight: 600;
-  font-size: 1.75rem;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  font-size: 1.95rem;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
   color: var(--ink);
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.6rem;
 }
 .intro {
   font-size: 0.92rem;
   line-height: 1.55;
   color: var(--ink-soft);
-  margin: 0 0 1.75rem;
+  margin: 0 0 2rem;
 }
 
 .champ { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.35rem; }
