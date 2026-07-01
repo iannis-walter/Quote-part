@@ -1,6 +1,6 @@
 :host { display: block; }
 
-.cascade { display: flex; flex-direction: column; gap: 1.15rem; }
+.cascade { display: flex; flex-direction: column; gap: 1.1rem; }
 
 .etiquette {
   display: flex;
@@ -11,38 +11,37 @@
   color: var(--ink-soft);
 }
 .etiquette em { color: var(--ink-faint); font-style: normal; }
-.etiquette .fort { color: var(--accent-ink); font-weight: 500; }
+.etiquette .fort { color: var(--ink); font-weight: 600; }
 
-.montant { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.montant { font-variant-numeric: tabular-nums; color: var(--ink); }
 .montant.secu { color: var(--ink-soft); }
-.montant.reste { color: var(--accent-ink); font-weight: 500; }
+.montant.reste { color: var(--ink); font-weight: 600; }
 
 .piste {
   height: 38px;
-  border-radius: 10px;
-  background: oklch(0.94 0.008 320);
+  border-radius: 11px;
+  background: var(--piste);
   overflow: hidden;
 }
 
 .barre {
   height: 100%;
-  border-radius: 10px;
+  border-radius: 11px;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.52s var(--ease-out);
   display: flex;
 }
 .barre.revele { transform: scaleX(1); }
-.barre.prix { width: 100%; background: oklch(0.9 0.012 320); }
+.barre.prix { width: 100%; background: var(--fill); }
 .barre.secu { background: var(--secu); }
-.barre.reste { background: var(--accent); }
+.barre.reste { background: var(--reste); }
 
-// Stagger : le décompte « tombe » de haut en bas.
 .etage:nth-child(2) .barre { transition-delay: 0.07s; }
 .etage:nth-child(3) .barre { transition-delay: 0.14s; }
 
 .seg { display: block; height: 100%; }
-.seg.franchise { background: oklch(0.66 0.15 55); }
+.seg.franchise { background: #e07c00; }
 
 .detail {
   display: flex;
@@ -63,12 +62,11 @@
 }
 .verdict span { color: var(--ink-soft); font-size: 0.9rem; }
 .verdict strong {
-  font-family: var(--mono);
-  font-weight: 500;
-  font-size: 2.4rem;
-  color: var(--accent-ink);
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .apres {
@@ -80,8 +78,7 @@
 }
 .apres span { color: var(--ink-soft); font-size: 0.85rem; }
 .apres strong {
-  font-family: var(--mono);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.35rem;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
@@ -91,7 +88,7 @@
   margin: 0.9rem 0 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--accent-ink);
+  color: var(--reste-ink);
   transition: opacity 0.3s var(--ease-out);
 }
 @starting-style {

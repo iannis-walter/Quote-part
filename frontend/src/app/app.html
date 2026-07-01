@@ -15,8 +15,15 @@
 
       <label class="champ">
         <span class="libelle">Rechercher un médicament</span>
-        <input type="search" placeholder="Doliprane, amoxicilline…"
-               (input)="chercher($any($event.target).value)" />
+        <div class="recherche">
+          <svg class="loupe" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="20" y1="20" x2="16.5" y2="16.5"></line>
+          </svg>
+          <input type="search" placeholder="Doliprane, amoxicilline…"
+                 (input)="chercher($any($event.target).value)" />
+        </div>
       </label>
 
       <label class="champ">
