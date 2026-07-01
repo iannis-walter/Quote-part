@@ -71,6 +71,22 @@
   letter-spacing: -0.02em;
 }
 
+.apres {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin-top: 0.85rem;
+}
+.apres span { color: var(--ink-soft); font-size: 0.85rem; }
+.apres strong {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 1.35rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
 .note {
   margin: 0.9rem 0 0;
   font-size: 0.82rem;

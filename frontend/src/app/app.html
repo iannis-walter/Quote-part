@@ -44,6 +44,15 @@
         </label>
       </div>
 
+      <label class="champ">
+        <span class="libelle">Complémentaire santé</span>
+        <select (change)="choisirMutuelle(+$any($event.target).value)">
+          <option value="0">Aucune</option>
+          <option value="50">Couvre 50 % du ticket modérateur</option>
+          <option value="100">Couvre 100 % du ticket modérateur</option>
+        </select>
+      </label>
+
       <button class="calculer" (click)="calculer()" [disabled]="chargement() || !cip13()">
         {{ chargement() ? 'Calcul…' : 'Calculer le reste à charge' }}
       </button>

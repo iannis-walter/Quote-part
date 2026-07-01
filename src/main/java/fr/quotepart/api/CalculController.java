@@ -2,8 +2,10 @@ package fr.quotepart.api;
 
 import fr.quotepart.application.CalculerResteACharge;
 import fr.quotepart.domaine.medicament.CodeCip13;
+import fr.quotepart.domaine.remboursement.Complementaire;
 import fr.quotepart.domaine.remboursement.Decompte;
 import fr.quotepart.domaine.remboursement.ProfilPatient;
+import fr.quotepart.domaine.remboursement.Taux;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,11 @@ public class CalculController {
                 request.profil().c2s(),
                 request.profil().regimeLocal());
         Decompte decompte = calculerResteACharge.executer(new CodeCip13(request.cip13()), profil);
+
+        if (request.complementaire() != null) {
+            Complementaire complementaire = new Complementaire(Taux.pourcent(request.complementaire()));
+            return DecompteResponse.depuis(decompte, complementaire.resteApres(decompte));
+        }
         return DecompteResponse.depuis(decompte);
     }
 }

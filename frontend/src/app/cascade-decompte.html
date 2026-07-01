@@ -46,4 +46,11 @@
   @if (note(); as texte) {
     <p class="note">{{ texte }}</p>
   }
+
+  @if (decompte().resteApresComplementaire != null) {
+    <div class="apres">
+      <span>Après votre complémentaire</span>
+      <strong>{{ euros(decompte().resteApresComplementaire!) }}</strong>
+    </div>
+  }
 </div>

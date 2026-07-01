@@ -51,3 +51,10 @@ Fonctionnalité: Calcul du reste à charge médicamenteux
     Alors le taux appliqué est 90 %
     Et le remboursement de la Sécurité sociale est 9,00 €
     Et le reste à charge est 2,00 €
+
+  Scénario: Complémentaire santé couvrant le ticket modérateur
+    Étant donné une présentation remboursable à 10,00 € avec un SMR "important"
+    Et un patient dans le parcours de soins, sans ALD
+    Et une complémentaire qui couvre 100 % du ticket modérateur
+    Quand je calcule le reste à charge
+    Alors le reste à charge après complémentaire est 1,00 €

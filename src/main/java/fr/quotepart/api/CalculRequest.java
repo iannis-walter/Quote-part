@@ -9,7 +9,8 @@ import jakarta.validation.constraints.NotNull;
  */
 public record CalculRequest(
         @NotBlank String cip13,
-        @NotNull @Valid ProfilRequest profil) {
+        @NotNull @Valid ProfilRequest profil,
+        Integer complementaire) {
 
     public record ProfilRequest(
             boolean parcoursSoinsRespecte,

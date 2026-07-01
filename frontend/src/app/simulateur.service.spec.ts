@@ -26,7 +26,7 @@ describe('SimulateurService', () => {
 
     const requete = httpMock.expectOne('/api/calculs');
     expect(requete.request.method).toBe('POST');
-    expect(requete.request.body).toEqual({ cip13: '3400920095517', profil });
+    expect(requete.request.body).toEqual({ cip13: '3400920095517', profil, complementaire: null });
 
     requete.flush({
       prix: 10, baseRemboursement: 10, tauxPourcent: 65,

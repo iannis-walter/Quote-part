@@ -25,6 +25,7 @@ export class App implements OnInit {
   protected readonly ald = signal(false);
   protected readonly c2s = signal(false);
   protected readonly regimeLocal = signal(false);
+  protected readonly mutuelle = signal(0);
   protected readonly decompte = signal<Decompte | null>(null);
   protected readonly chargement = signal(false);
   protected readonly erreur = signal<string | null>(null);
@@ -75,6 +76,11 @@ export class App implements OnInit {
     this.decompte.set(null);
   }
 
+  protected choisirMutuelle(pourcentage: number): void {
+    this.mutuelle.set(pourcentage);
+    this.decompte.set(null);
+  }
+
   protected calculer(): void {
     if (!this.cip13()) {
       return;
@@ -82,12 +88,16 @@ export class App implements OnInit {
     this.chargement.set(true);
     this.erreur.set(null);
     this.service
-      .calculer(this.cip13(), {
-        parcoursSoinsRespecte: this.parcours(),
-        ald: this.ald(),
-        c2s: this.c2s(),
-        regimeLocal: this.regimeLocal(),
-      })
+      .calculer(
+        this.cip13(),
+        {
+          parcoursSoinsRespecte: this.parcours(),
+          ald: this.ald(),
+          c2s: this.c2s(),
+          regimeLocal: this.regimeLocal(),
+        },
+        this.mutuelle() > 0 ? this.mutuelle() : null,
+      )
       .subscribe({
         next: (decompte) => {
           this.decompte.set(decompte);

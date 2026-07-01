@@ -23,4 +23,5 @@ export interface Decompte {
   ticketModerateur: number;
   franchiseMedicale: number;
   resteACharge: number;
+  resteApresComplementaire: number | null;
 }

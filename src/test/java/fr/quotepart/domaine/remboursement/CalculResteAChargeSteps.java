@@ -22,6 +22,7 @@ public class CalculResteAChargeSteps {
 
     private Presentation presentation;
     private ProfilPatient profil = new ProfilPatient(true, false);
+    private Complementaire complementaire;
     private Decompte decompte;
 
     @ParameterType("(\\d+,\\d{2}) €")
@@ -69,9 +70,19 @@ public class CalculResteAChargeSteps {
         profil = new ProfilPatient(true, false, false, true);
     }
 
+    @Et("une complémentaire qui couvre {int} % du ticket modérateur")
+    public void uneComplementaire(int pourcentage) {
+        complementaire = new Complementaire(Taux.pourcent(pourcentage));
+    }
+
     @Quand("je calcule le reste à charge")
     public void jeCalcule() {
         decompte = calcul.calculer(presentation, profil, bareme);
+    }
+
+    @Alors("le reste à charge après complémentaire est {montant}")
+    public void leResteApresComplementaireEst(Montant attendu) {
+        assertThat(complementaire.resteApres(decompte)).isEqualTo(attendu);
     }
 
     @Alors("le taux appliqué est {int} %")
