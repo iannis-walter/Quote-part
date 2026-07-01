@@ -23,6 +23,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/quotepart
       SPRING_DATASOURCE_USERNAME: quotepart
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?Définir POSTGRES_PASSWORD dans .env}
+      QUOTEPART_DEMO_AMORCER: "true"
     ports:
       - "8080:8080"
     restart: unless-stopped

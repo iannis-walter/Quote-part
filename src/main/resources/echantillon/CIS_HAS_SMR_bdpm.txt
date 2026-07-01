@@ -1,0 +1,8 @@
+61266250	CT-0001	Inscription	20200101	Important	Le service médical rendu est important.
+62345678	CT-0002	Inscription	20200101	Important	Le service médical rendu est important.
+63456789	CT-0003	Inscription	20200101	Important	Le service médical rendu est important.
+64567890	CT-0004	Inscription	20200101	Modéré	Le service médical rendu est modéré.
+65678901	CT-0005	Inscription	20200101	Faible	Le service médical rendu est faible.
+66789012	CT-0006	Inscription	20200101	Insuffisant	Le service médical rendu est insuffisant.
+67890123	CT-0007	Inscription	20200101	Important	Le service médical rendu est important.
+68901234	CT-0008	Inscription	20200101	Important	Le service médical rendu est important.

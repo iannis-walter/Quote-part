@@ -1,0 +1,8 @@
+61266250	DOLIPRANE 1000 mg, comprimé	comprimé	orale	Autorisation active
+62345678	AMOXICILLINE BIOGARAN 500 mg, gélule	gélule	orale	Autorisation active
+63456789	LEVOTHYROX 100 microgrammes, comprimé sécable	comprimé sécable	orale	Autorisation active
+64567890	SPASFON 80 mg, comprimé enrobé	comprimé enrobé	orale	Autorisation active
+65678901	VOLTARENE EMULGEL 1 %, gel	gel	cutanée	Autorisation active
+66789012	MAGNE B6, comprimé enrobé	comprimé enrobé	orale	Autorisation active
+67890123	KARDEGIC 75 mg, poudre pour solution buvable	poudre	orale	Autorisation active
+68901234	DAFALGAN 500 mg, comprimé	comprimé	orale	Autorisation active

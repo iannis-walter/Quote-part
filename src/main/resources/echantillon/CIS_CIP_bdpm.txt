@@ -1,0 +1,8 @@
+61266250	2009551	plaquette(s) thermoformée(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000010	oui	65 %	2,18	2,18	0,00	Indications
+62345678	2009552	plaquette(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000027	oui	65 %	3,45	3,45	0,00	Indications
+63456789	2009553	plaquette(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000034	oui	65 %	3,12	3,12	0,00	Indications
+64567890	2009554	plaquette(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000041	oui	30 %	2,04	2,04	0,00	Indications
+65678901	2009555	tube(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000058	oui	15 %	4,50	4,50	0,00	Indications
+66789012	2009556	plaquette(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000065	non		3,90	3,90	0,00	Indications
+67890123	2009557	sachet(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000072	oui	65 %	2,90	2,90	0,00	Indications
+68901234	2009558	plaquette(s)	Présentation active	Déclaration de commercialisation	01/01/2020	3400930000089	oui	65 %	1,95	1,95	0,00	Indications
