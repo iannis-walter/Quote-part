@@ -4,7 +4,8 @@
       <span class="logo">Reliquat</span>
       <span class="tagline">reste à charge médicamenteux</span>
     </div>
-    <span class="source-tag">données BDPM</span>
+    <a class="source-tag" href="https://base-donnees-publique.medicaments.gouv.fr"
+       target="_blank" rel="noopener">données BDPM</a>
   </header>
 
   <main class="scene">
@@ -49,6 +50,11 @@
         <app-cascade-decompte [decompte]="d" />
       } @else {
         <div class="vide">
+          <div class="apercu" aria-hidden="true">
+            <span class="barre-fantome" style="width: 100%"></span>
+            <span class="barre-fantome" style="width: 64%"></span>
+            <span class="barre-fantome" style="width: 42%"></span>
+          </div>
           <p class="vide-titre">Le décompte s'affichera ici</p>
           <p class="vide-sous">Prix, part de la Sécurité sociale, ticket modérateur, franchise, reste à charge.</p>
         </div>

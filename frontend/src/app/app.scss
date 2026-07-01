@@ -23,6 +23,11 @@
   border: 1px solid var(--line);
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .source-tag:hover { color: var(--ink-soft); border-color: var(--ink-faint); }
 }
 
 .scene {
@@ -110,11 +115,12 @@ select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px
 .vide {
   border: 1px dashed var(--line);
   border-radius: 14px;
-  padding: 2.5rem 1.5rem;
-  text-align: center;
+  padding: 1.75rem;
 }
+.apercu { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.barre-fantome { height: 26px; border-radius: 8px; background: oklch(0.945 0.008 320); }
 .vide-titre { color: var(--ink-soft); margin: 0 0 0.4rem; }
-.vide-sous { color: var(--ink-faint); font-size: 0.82rem; margin: 0; line-height: 1.6; }
+.vide-sous { color: var(--ink-faint); font-size: 0.82rem; margin: 0; line-height: 1.6; max-width: 40ch; }
 
 .pied {
   display: flex;
