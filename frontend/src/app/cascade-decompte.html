@@ -30,10 +30,12 @@
         <span class="seg franchise" [style.flexBasis.%]="partReste(decompte().franchiseMedicale)"></span>
       </div>
     </div>
-    <div class="detail">
-      <span>ticket modérateur {{ euros(decompte().ticketModerateur) }}</span>
-      <span>franchise {{ euros(decompte().franchiseMedicale) }}</span>
-    </div>
+    @if (!estNonRemboursable()) {
+      <div class="detail">
+        <span>ticket modérateur {{ euros(decompte().ticketModerateur) }}</span>
+        <span>franchise {{ euros(decompte().franchiseMedicale) }}</span>
+      </div>
+    }
   </div>
 
   <div class="verdict">

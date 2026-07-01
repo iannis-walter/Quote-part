@@ -1,7 +1,14 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CascadeDecompte } from './cascade-decompte';
 import { Decompte, Medicament } from './models';
 import { SimulateurService } from './simulateur.service';
+
+const LIBELLES_SMR: Record<string, string> = {
+  IMPORTANT: 'SMR important',
+  MODERE: 'SMR modéré',
+  FAIBLE: 'SMR faible',
+  INSUFFISANT: 'SMR insuffisant',
+};
 
 @Component({
   selector: 'app-root',
@@ -19,6 +26,15 @@ export class App implements OnInit {
   protected readonly decompte = signal<Decompte | null>(null);
   protected readonly chargement = signal(false);
   protected readonly erreur = signal<string | null>(null);
+
+  /** Tag contextuel sous le sélecteur : SMR ou « non remboursable ». */
+  protected readonly tagSmr = computed(() => {
+    const choisi = this.medicaments().find((m) => m.cip13 === this.cip13());
+    if (!choisi) {
+      return null;
+    }
+    return choisi.remboursable ? (LIBELLES_SMR[choisi.smr ?? ''] ?? null) : 'Non remboursable';
+  });
 
   ngOnInit(): void {
     this.service.lister().subscribe({

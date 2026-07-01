@@ -19,6 +19,9 @@
             <option [value]="m.cip13">{{ m.denomination || m.cip13 }}</option>
           }
         </select>
+        @if (tagSmr(); as tag) {
+          <span class="tag-smr">{{ tag }}</span>
+        }
       </label>
 
       <div class="options">

@@ -12,10 +12,15 @@ export class CascadeDecompte {
   protected readonly revele = signal(false);
   protected readonly resteAnime = signal(0);
 
+  protected readonly estNonRemboursable = computed(() => {
+    const d = this.decompte();
+    return d.tauxPourcent === 0 && d.remboursementSecu === 0;
+  });
+
   /** Note contextuelle selon le cas de prise en charge. */
   protected readonly note = computed(() => {
     const d = this.decompte();
-    if (d.tauxPourcent === 0 && d.remboursementSecu === 0) {
+    if (this.estNonRemboursable()) {
       return 'Médicament non remboursable : le prix est intégralement à votre charge.';
     }
     if (d.tauxPourcent === 100) {
